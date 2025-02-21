@@ -1,0 +1,160 @@
+body {
+    background-color: black;
+    color: limegreen;
+    font-family: monospace;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden; /* Hide scrollbars */
+}
+
+.terminal {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    border: 2px solid limegreen;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.column {
+    flex: 1;
+    padding: 10px;
+    overflow: hidden;
+    height: 100%;
+    white-space: pre-wrap;
+    line-height: 1.5;
+    position: relative;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#scroll-text {
+    border-right: 5px solid limegreen;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+.column p {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    top: 0;
+}
+
+/* Container for the right-side elements */
+.half-column {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Right text column now only takes bottom half */
+#typing-text {
+    flex: 1;
+    order: 2;
+    font-family: monospace;
+    color: limegreen;
+}
+
+/* Top-right art area */
+#artbox {
+    flex: 1;
+    order: 1;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+    position: relative; /* Makes child elements position relative to this */
+    width: 100%;
+    height: 100%;
+    border-bottom: 5px solid limegreen;
+}
+
+/* line art panel styling */
+.line {
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    /* background: limegreen; */
+    opacity: 0.7;
+}
+
+@keyframes moveLineRight {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes moveLineLeft {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes moveLineUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(-100%);
+    }
+}
+
+@keyframes moveLineDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(100%);
+    }
+}
+
+/* Flickering effect for some lines */
+@keyframes flicker {
+    0% { opacity: 0.6; }
+    20% { opacity: 0.3; }
+    40% { opacity: 0.8; }
+    60% { opacity: 0.2; }
+    80% { opacity: 0.1; }
+    100% { opacity: 0.5; }
+}
+
+#ascii {
+    font-size: 20px;
+    color: limegreen;
+    white-space: pre-wrap;
+    overflow: hidden; /* Hide scrollbars */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.fade-out {
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}

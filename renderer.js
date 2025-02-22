@@ -73,10 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to count leading spaces in a string
     function countLeadingSpaces(str) {
-        const match = str.match(/^\s+/);
+        const match = str.match(/^\s+/); // Match all leading spaces (\s)
         return match ? match[0].length : 0;
     }
-    
+
     // Function to generate ASCII text
     function generateAscii() {
         if (asciiLines.length === 0) return "Awaiting data...";
@@ -91,13 +91,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Count leading spaces and set padding-left
             const leadingSpaces = countLeadingSpaces(asciiLines[i]);
-            const paddingLeft = `${leadingSpaces}ch`; // Use 'ch' unit for character width
+            const paddingLeft = `${leadingSpaces}ch`; //'ch' unit for character width
             newLine.style.paddingLeft = paddingLeft;
-
             new Typed(`#ascii-${i}`, {
                 strings: [asciiLines[i].trimStart()],
-                typeSpeed: 50,
-                showCursor: false
+                typeSpeed: 1,
+                showCursor: false,
+                loop: true,
+                fadeOut: true,
+                fadeOutClass: 'fade-out',
+                fadeOutDelay: 1000,
             });
         }
     }

@@ -149,7 +149,7 @@ body {
     height: 100%;
 }
 
-.fade-out {
+.typed-fade-out {
     animation: fadeOut 1s forwards;
 }
 

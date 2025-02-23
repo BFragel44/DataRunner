@@ -20,6 +20,19 @@ body {
     overflow: hidden;
 }
 
+.hex-panel {
+    flex: 1;
+    padding: 10px;
+    overflow: hidden;
+    height: 100%;
+    white-space: pre-wrap;
+    line-height: 1.5;
+    position: relative;
+    -webkit-user-select: none;
+    user-select: none;
+    bottom: 0;
+}
+
 .column {
     flex: 1;
     padding: 10px;
@@ -147,14 +160,4 @@ body {
     justify-content: center;
     width: 100%;
     height: 100%;
-}
-
-.typed-fade-out {
-    animation: fadeOut 1s forwards;
-}
-
-@keyframes fadeOut {
-    to {
-        opacity: 0;
-    }
 }

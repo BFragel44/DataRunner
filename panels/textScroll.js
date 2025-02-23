@@ -5,11 +5,13 @@
 // Event listener for text scroll panel
 document.addEventListener('DOMContentLoaded', () => {
     const scrollColumn = document.getElementById('scroll-text');
+    if (!scrollColumn) return; // Exit if the panel is missing
+    // Create array to hold the strings
     let texts = [];
 
     // Load strings from JSON file
     function loadTexts() {
-        const filePath = path.join(__dirname, 'terminal_texts.json');
+        const filePath = path.join(__dirname, 'assets\\terminal_texts.json');
         fs.readFile(filePath, 'utf8', (err, data) => {
             if (err) {
                 console.error("Error loading text file:", err);

@@ -6,12 +6,13 @@ const Typed = require('typed.js');
 document.addEventListener('DOMContentLoaded', () => {
     // Get the text area element from HTML
     const textArea = document.getElementById('typing-text');
+    if (!textArea) return; // Exit if the panel is missing
     // Create array to hold the ASCII strings
     let asciiLines = [];
     
     // Load ASCII strings from JSON file
     function loadTexts() {
-        const filePath = path.join(__dirname, 'typing_texts.json');
+        const filePath = path.join(__dirname, 'assets\\typing_texts.json');
         fs.readFile(filePath, 'utf8', (err, data) => {
             if (err) {
                 console.error("Error loading text file:", err);
@@ -44,14 +45,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const leadingSpaces = countLeadingSpaces(asciiLines[i]);
             const paddingLeft = `${leadingSpaces}ch`; //'ch' unit for character width
             newLine.style.paddingLeft = paddingLeft;
+            // count the number of characters in the line
+            const charCount = asciiLines[i].length - leadingSpaces;
+            console.log(`Line ${i} has ${charCount} characters and ${leadingSpaces} leading spaces.`);
             new Typed(`#ascii-${i}`, {
                 strings: [asciiLines[i].trimStart()],
-                typeSpeed: 1,
+                typeSpeed: 0,
                 showCursor: false,
                 loop: true,
                 fadeOut: true,
-                fadeOutClass: 'fade-out',
-                fadeOutDelay: 1000,
+                fadeTimeout: 1000
             });
         }
     }

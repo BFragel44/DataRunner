@@ -33,6 +33,20 @@ body {
     bottom: 0;
 }
 
+.hex-column {
+    flex: 1;
+    padding: 10px;
+    overflow: hidden;
+    height: 100%;
+    white-space: pre-wrap;
+    line-height: 1.5;
+    position: relative;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+
+
 .column {
     flex: 1;
     padding: 10px;

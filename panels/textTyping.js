@@ -45,9 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const leadingSpaces = countLeadingSpaces(asciiLines[i]);
             const paddingLeft = `${leadingSpaces}ch`; //'ch' unit for character width
             newLine.style.paddingLeft = paddingLeft;
-            // count the number of characters in the line
-            const charCount = asciiLines[i].length - leadingSpaces;
-            console.log(`Line ${i} has ${charCount} characters and ${leadingSpaces} leading spaces.`);
+            // Initialize Typed.js for each line
             new Typed(`#ascii-${i}`, {
                 strings: [asciiLines[i].trimStart()],
                 typeSpeed: 0,

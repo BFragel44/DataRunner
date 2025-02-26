@@ -20,18 +20,33 @@ body {
     overflow: hidden;
 }
 
-.hex-panel {
+/* .hex-panel {
     flex: 1;
-    padding: 10px;
-    overflow: hidden;
-    height: 100%;
-    white-space: pre-wrap;
+    min-width: 150px;
+    color: limegreen;
+    font-size: 14px;
+    text-align: left;
     line-height: 1.5;
-    position: relative;
+    white-space: pre;
+    overflow: hidden;
     -webkit-user-select: none;
     user-select: none;
     bottom: 0;
+} */
+
+
+.hex-panel {
+    flex: 1;
+    min-width: 200px;
+    color: limegreen;
+    font-size: 14px;
+    text-align: left;
+    white-space: pre;
+    overflow: hidden;
+    letter-spacing: 2px; /* space between characters */
+    line-height: 1.5; /* row spacing */
 }
+
 
 .hex-column {
     flex: 1;

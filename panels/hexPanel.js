@@ -1,18 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // const hexPanel = document.getElementsByClassName('hex-panel')[0]; // Get the first element with class 'hex-panel'
-    const hexPanel = document.querySelector('.hex-panel');
-    if (!hexPanel) return; // Exit if the panel is missing
+    // Get the reference to the hex panel container
+    const centerColumn = document.querySelector('.hex-panel');
+        if (!centerColumn) return; // Exit if the panel is missing
 
-    // Set the number of rows and columns for the hex panel
-    // set the number of rows so it fits the screen
-    const { width, height } = window.screen;
-    const rowHeight = 20; // Height of each row in pixels
-    const numRows = Math.floor(height / rowHeight); // Number of rows in the panel
-    // const numRows = 40;  // Number of rows in the panel
-    const numCols = 16;  // Characters per row
-    const updateRate = 400; // Update interval in ms
+    // Configuration for the hex display
+    const numRows = 40;  // Number of rows in the panel
+    const charsPerColumn = 16; // Each column contains 16 characters per row
+    const columnSpacing = "  "; // Space between columns
+    const updateRate = 100; // Update interval in milliseconds
 
-    // Function to generate a random hex string
+    /**
+     * Generates a random hexadecimal string of a given length
+     * @param {number} length - Number of characters to generate
+     * @returns {string} - Random hex string
+     */
     function getRandomHexString(length) {
         const chars = "0123456789ABCDEF";
         let result = "";
@@ -22,22 +23,70 @@ document.addEventListener('DOMContentLoaded', () => {
         return result;
     }
 
-    // Initialize the panel with random hex rows
-    let hexRows = Array.from({ length: numRows }, () => getRandomHexString(numCols));
-
-    function updatePanel() {
-        // Randomly change some characters in each row
-        hexRows = hexRows.map(row => {
-            let rowArray = row.split("");
-            let indexToChange = Math.floor(Math.random() * rowArray.length);
-            rowArray[indexToChange] = getRandomHexString(1);
-            return rowArray.join("");
-        });
-
-        // Render the updated rows in the panel
-        hexPanel.innerHTML = hexRows.join("<br>");
+    /**
+     * Calculates the number of hex columns that can fit inside the panel
+     * @returns {number} - Number of columns that fit in the panel width
+     */
+    function getColumnCount() {
+        const panelWidth = centerColumn.clientWidth;
+        const charWidth = 10; // Approximate width of a character in pixels (adjust as needed)
+        return Math.floor(panelWidth / (charsPerColumn * charWidth)); // Columns based on available space
     }
 
-    // Start updating the panel periodically
+    /**
+     * Calculates the number of rows that can fit inside the panel
+     * @returns {number} - Number of rows that fit in the panel height
+     */
+    function getRowCount() {
+        const panelHeight = centerColumn.clientHeight;
+        const charHeight = 20; // Approximate height of a character in pixels (adjust as needed)
+        return Math.floor(panelHeight / charHeight); // Rows based on available space
+    }
+
+    /**
+     * Generates an initial hex matrix where each row contains multiple columns
+     * @returns {string[]} - Array of rows with formatted hex data
+     */
+    function generateHexGrid() {
+        const numCols = getColumnCount(); // Calculate columns dynamically
+        const numRows = getRowCount(); // Calculate rows dynamically
+        return Array.from({ length: numRows }, () => {
+            let row = Array.from({ length: numCols }, () =>
+                getRandomHexString(charsPerColumn) // Generate a 16-character hex column
+            ).join(columnSpacing); // Add spacing between columns
+            return row;
+        });
+    }
+
+    // Initialize the hex grid with random values
+    let hexRows = generateHexGrid();
+
+    /**
+     * Updates the hex panel by randomly changing characters within the rows
+     */
+    function updatePanel() {
+        hexRows = hexRows.map(row => {
+            let rowArray = row.split(""); // Convert row into an array of characters
+            let indexToChange;
+            do {
+                indexToChange = Math.floor(Math.random() * rowArray.length);
+            } while (rowArray[indexToChange] === " "); // Ensure we don't replace spaces
+
+            rowArray[indexToChange] = getRandomHexString(1); // Replace with a random hex character
+            return rowArray.join(""); // Convert back to string
+        });
+
+        // Render the updated hex data into the panel
+        centerColumn.innerHTML = hexRows.join("<br>");
+    }
+
+    /**
+     * Listen for window resize events and regenerate the grid accordingly
+     */
+    window.addEventListener('resize', () => {
+        hexRows = generateHexGrid(); // Recalculate grid when resized
+    });
+
+    // Start periodically updating the hex panel
     setInterval(updatePanel, updateRate);
 });

@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
             newLine.id = `ascii-${i}`;
             newLine.style.whiteSpace = 'pre-wrap';
             textArea.appendChild(newLine);
-
             // Count leading spaces and set padding-left
             const leadingSpaces = countLeadingSpaces(asciiLines[i]);
             const paddingLeft = `${leadingSpaces}ch`; //'ch' unit for character width
@@ -50,9 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 strings: [asciiLines[i].trimStart()],
                 typeSpeed: 0,
                 showCursor: false,
-                loop: true,
-                fadeOut: true,
-                fadeTimeout: 1000
+                loop: false,   
             });
         }
     }

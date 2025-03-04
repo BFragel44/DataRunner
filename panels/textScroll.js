@@ -1,7 +1,3 @@
-
-// const fs = require('fs');
-// const path = require('path');
-
 // Event listener for text scroll panel
 document.addEventListener('DOMContentLoaded', () => {
     const scrollColumn = document.getElementById('scroll-text');

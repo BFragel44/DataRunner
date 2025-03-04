@@ -12,7 +12,7 @@ const createWindow = () => {
     });
     win.setFullScreen(false)
     win.loadFile('index.html');
-    win.webContents.openDevTools(); // Open DevTools
+    // win.webContents.openDevTools(); // Open DevTools
 };
 
 app.whenReady().then(() => {

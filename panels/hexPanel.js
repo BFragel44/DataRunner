@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!centerColumn) return; // Exit if the panel is missing
 
     // Configuration for the hex display
-    const numRows = 40;  // Number of rows in the panel
     const charsPerColumn = 16; // Each column contains 16 characters per row
     const columnSpacing = "  "; // Space between columns
     const updateRate = 100; // Update interval in milliseconds
@@ -29,8 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function getColumnCount() {
         const panelWidth = centerColumn.clientWidth;
-        const charWidth = 10; // Approximate width of a character in pixels (adjust as needed)
-        return Math.floor(panelWidth / (charsPerColumn * charWidth)); // Columns based on available space
+        const charWidth = 10;
+        console.log(`Panel Width: ${panelWidth}px, Char Width: ${charWidth}px`); // Debugging line
+        const columnWidth = charsPerColumn * charWidth + columnSpacing.length * charWidth;
+        const result = Math.floor(panelWidth / columnWidth);
+        return result;
     }
 
     /**
@@ -50,7 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function generateHexGrid() {
         const numCols = getColumnCount(); // Calculate columns dynamically
         const numRows = getRowCount(); // Calculate rows dynamically
-        return Array.from({ length: numRows }, () => {
+        
+        return Array.from({ length: numRows-3 }, () => {
             let row = Array.from({ length: numCols }, () =>
                 getRandomHexString(charsPerColumn) // Generate a 16-character hex column
             ).join(columnSpacing); // Add spacing between columns
@@ -70,14 +73,25 @@ document.addEventListener('DOMContentLoaded', () => {
             let indexToChange;
             do {
                 indexToChange = Math.floor(Math.random() * rowArray.length);
-            } while (rowArray[indexToChange] === " "); // Ensure we don't replace spaces
-
+            } while (rowArray[indexToChange] === " "); // Don't replace spaces or zeroes
             rowArray[indexToChange] = getRandomHexString(1); // Replace with a random hex character
             return rowArray.join(""); // Convert back to string
         });
 
         // Render the updated hex data into the panel
-        centerColumn.innerHTML = hexRows.join("<br>");
+        centerColumn.innerHTML = hexRows.map((row, index) => 
+            `<div class="hex-row" data-row="${index}">${row}</div>`).join("");
+
+        // fade opacity of the rows in and out in waves
+        const rows = document.querySelectorAll('.hex-row');
+        const currentTime = Date.now();
+        rows.forEach((row, index) => {
+            let opacity = Math.abs(Math.cos(currentTime / 1000 + index)); // cos wave for smooth transition
+            opacity = Math.max(opacity, 0.5); // Ensure opacity does not go below 0.2
+            row.style.opacity = opacity;
+            row.style.transition = `opacity 1000ms ease-in-out`;
+            row.style.textShadow = `0 0 10px rgba(255, 255, 255, ${opacity})`; // Adds a glow effect
+        });
     }
 
     /**

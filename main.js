@@ -1,4 +1,4 @@
-const { app, BrowserWindow, screen } = require('electron/main');
+import { app, BrowserWindow, screen } from "electron";
 
 const createWindow = () => {
     const { width, height } = screen.getPrimaryDisplay().workAreaSize;

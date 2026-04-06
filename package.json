@@ -11,7 +11,7 @@
   "author": "Brett Fragel",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^34.1.1"
+    "electron": "^38.8.6"
   },
   "dependencies": {
     "typed.js": "^2.1.0"
